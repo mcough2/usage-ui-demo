@@ -5,6 +5,7 @@ A Next.js web application for viewing usage data from Metronome's API. Deployed 
 ## Features
 
 - **Usage Tab**: Query and display usage data from Metronome API
+- **Customer Dropdown**: Select customers from a dropdown in the top right (demo feature)
 - Clean, modern UI matching Asana's admin interface
 - Sidebar navigation with multiple tabs (only Usage tab is functional)
 
@@ -54,7 +55,7 @@ A Next.js web application for viewing usage data from Metronome's API. Deployed 
 ## Usage
 
 1. Navigate to the **Usage** tab in the sidebar
-2. Enter a Customer ID
+2. Select a customer from the dropdown in the top right, or enter a Customer ID manually
 3. Select a date range (defaults to last 7 days)
 4. Click "Fetch Usage Data"
 5. View the results including total events, total seconds, and individual event details
@@ -65,8 +66,10 @@ A Next.js web application for viewing usage data from Metronome's API. Deployed 
 Asana/
 ├── app/
 │   ├── api/
-│   │   └── usage/
-│   │       └── route.ts          # API route for fetching usage data
+│   │   ├── usage/
+│   │   │   └── route.ts          # API route for fetching usage data
+│   │   └── customers/
+│   │       └── route.ts          # API route for fetching customers
 │   ├── usage/
 │   │   ├── page.tsx              # Usage page component
 │   │   └── usage.module.css      # Usage page styles
