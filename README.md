@@ -1,4 +1,4 @@
-# Asana Usage App
+# Usage App
 
 A Next.js web application for viewing usage data from Metronome's API. Deployed on Vercel.
 
@@ -6,7 +6,7 @@ A Next.js web application for viewing usage data from Metronome's API. Deployed 
 
 - **Usage Tab**: Query and display usage data from Metronome API
 - **Customer Dropdown**: Select customers from a dropdown in the top right (demo feature)
-- Clean, modern UI matching Asana's admin interface
+- Clean, modern UI
 - Sidebar navigation with multiple tabs (only Usage tab is functional)
 
 ## Setup
@@ -63,7 +63,7 @@ A Next.js web application for viewing usage data from Metronome's API. Deployed 
 ## Project Structure
 
 ```
-Asana/
+usage-ui-demo/
 ├── app/
 │   ├── api/
 │   │   ├── usage/
