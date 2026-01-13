@@ -2,10 +2,51 @@
   max-width: 1200px;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
 .subtitle {
   font-size: 16px;
   color: #666;
-  margin-bottom: 32px;
+  margin-top: 8px;
+}
+
+.customerSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 250px;
+}
+
+.customerSelector label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #ff6b35;
+}
+
+.select:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+  color: #999;
 }
 
 .form {

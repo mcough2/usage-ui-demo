@@ -20,6 +20,13 @@ interface UsageData {
   total_events?: number
 }
 
+interface Customer {
+  id?: string
+  name?: string
+  email?: string
+  [key: string]: any
+}
+
 export default function UsagePage() {
   const pathname = usePathname()
   const [usageData, setUsageData] = useState<UsageData | null>(null)
@@ -28,6 +35,9 @@ export default function UsagePage() {
   const [customerId, setCustomerId] = useState('')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [customers, setCustomers] = useState<Customer[]>([])
+  const [selectedCustomerId, setSelectedCustomerId] = useState('')
+  const [loadingCustomers, setLoadingCustomers] = useState(false)
 
   useEffect(() => {
     // Set default dates (last 7 days)
@@ -37,7 +47,35 @@ export default function UsagePage() {
     
     setStartDate(start.toISOString().split('T')[0])
     setEndDate(end.toISOString().split('T')[0])
+    
+    // Fetch customers on mount
+    fetchCustomers()
   }, [])
+
+  const fetchCustomers = async () => {
+    setLoadingCustomers(true)
+    try {
+      const response = await fetch('/api/customers')
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch customers')
+      }
+
+      setCustomers(data.customers || [])
+    } catch (err) {
+      console.error('Error fetching customers:', err)
+      // Don't show error to user, just log it
+    } finally {
+      setLoadingCustomers(false)
+    }
+  }
+
+  const handleCustomerSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedId = e.target.value
+    setSelectedCustomerId(selectedId)
+    setCustomerId(selectedId)
+  }
 
   const fetchUsageData = async () => {
     if (!customerId) {
@@ -124,10 +162,31 @@ export default function UsagePage() {
 
       <main className={styles.main}>
         <div className={usageStyles.content}>
-          <h1>Usage</h1>
-          <p className={usageStyles.subtitle}>
-            Query usage data from Metronome API
-          </p>
+          <div className={usageStyles.header}>
+            <div>
+              <h1>Usage</h1>
+              <p className={usageStyles.subtitle}>
+                Query usage data from Metronome API
+              </p>
+            </div>
+            <div className={usageStyles.customerSelector}>
+              <label htmlFor="customerSelect">Customer:</label>
+              <select
+                id="customerSelect"
+                value={selectedCustomerId}
+                onChange={handleCustomerSelect}
+                disabled={loadingCustomers}
+                className={usageStyles.select}
+              >
+                <option value="">Select a customer...</option>
+                {customers.map((customer) => (
+                  <option key={customer.id} value={customer.id}>
+                    {customer.name || customer.email || customer.id || 'Unknown'}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
           <form onSubmit={handleSubmit} className={usageStyles.form}>
             <div className={usageStyles.formGroup}>
